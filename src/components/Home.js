@@ -1,14 +1,28 @@
+import React from "react";
 import { Grid } from "@material-ui/core";
 import Content from "./Content";
 import { useParams } from "react-router-dom";
 import data from "../data/data";
+import db from "../StoreContext";
 
 const Home = (props) => {
   const { searchKeyword } = props;
 
+  const [recipes, setRecipes] = React.useState([]);
+
+  React.useEffect(() => {
+    // initialization
+    db.collection("recipes")
+      .get()
+      .then((snapshot) => {
+        const recipes = snapshot.docs.map((d) => d.data());
+        setRecipes(recipes);
+      });
+  }, []);
+
   let { recipeStyle } = useParams();
 
-  const filteredData = data
+  const filteredData = recipes
     .filter((d) =>
       typeof recipeStyle !== "undefined" ? d.style === recipeStyle : true
     )
