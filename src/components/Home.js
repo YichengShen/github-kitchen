@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 import Content from "./Content";
 import { useParams } from "react-router-dom";
 import data from "../data/data";
-import db from "../StoreContext";
+import db from "../services/StoreContext";
 
 const Home = (props) => {
   const { searchKeyword } = props;
